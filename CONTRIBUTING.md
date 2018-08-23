@@ -1,0 +1,1 @@
+Issues, Pull Requests and extensions are welcome. No question is a silly question. Head on over to [issues](https://github.com/contiamo/operational-scripts/issues) to see where you could get involved, or to open one that will help us further improve Operational Scripts.
