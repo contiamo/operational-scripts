@@ -1,0 +1,20 @@
+{
+    "*.md": [
+      "node index.js toc",
+      "node index.js prettify",
+      "git add"
+    ],
+    "*.json": [
+      "node index.js prettify",
+      "git add"
+    ],
+    "*.(tsx|ts)": [
+        "node index.js lint-ts",
+        "node index.js prettify",
+        "git add"
+    ],
+    "*.(jsx|js)": [
+        "node index.js prettify",
+        "git add"
+    ]
+  }

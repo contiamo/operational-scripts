@@ -1,0 +1,20 @@
+{
+    "*.md": [
+      "operational-scripts toc",
+      "operational-scripts prettify",
+      "git add"
+    ],
+    "*.json": [
+      "operational-scripts prettify",
+      "git add"
+    ],
+    "*.(tsx|ts)": [
+        "operational-scripts lint-ts",
+        "operational-scripts prettify",
+        "git add"
+    ],
+    "*.(jsx|js)": [
+        "operational-scripts prettify",
+        "git add"
+    ]
+  }

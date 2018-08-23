@@ -1,0 +1,7 @@
+{
+  "extends": "./tsconfig",
+  "include": ["../../../src"], // because this usually lives in node_modules/@operational/scripts
+  "compilerOptions": {
+    "module": "commonjs"
+  }
+}
