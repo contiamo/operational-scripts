@@ -21,7 +21,7 @@ const defaultConfig = {
     filename: "[name].js",
     chunkFilename: "[name].js",
     path: join(context, "dist"),
-    publicPath: "",
+    publicPath: "/",
   },
   node: {
     fs: "empty",
@@ -44,7 +44,9 @@ const defaultConfig = {
   plugins: [
     new DashboardPlugin(),
     new HtmlWebpackPlugin({
-      chunksSortMode: "none",
+      chunksSortMode: "manual",
+      // The `config` chunk must come before `main` to make sure that runtime configuration variables are loaded
+      chunks: ["config", "main"],
       template: join(context, "public/index.html"),
     }),
   ],
