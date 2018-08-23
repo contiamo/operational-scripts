@@ -8,18 +8,16 @@ The end result is an array of codebases that are configured differently and lack
 
 While this is no silver bullet to end all onboarding and scalable maintainability, it is an attempt to remedy the problem in a way that is **[TypeScript](https://github.com/Microsoft/TypeScript/) first:** Operational Scripts allows us to hit the ground running with TypeScript with all of the tooling around it, including webpack packaging and development servers taken care of, including TSLint with optimal settings.
 
-Ideally, everything _just works_ so long as we have a reasonable project structure<sup>[[1]](#Footnotes)</sup>.
+Ideally, everything _just works_ so long as we have a reasonable project structure<sup>[[1]](#footnotes)</sup>.
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
-<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
-<!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
-- [Getting Started](#getting-started)
-- [Nuances](#nuances)
-  - [Build Script](#build-script)
-  - [Webpack Configuration](#webpack-configuration)
-- [Contributing](#contributing)
-- [Footnotes](#footnotes)
+* [Getting Started](#getting-started)
+* [Nuances](#nuances)
+  * [Build Script](#build-script)
+  * [Webpack Configuration](#webpack-configuration)
+* [Contributing](#contributing)
+* [Footnotes](#footnotes)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -36,14 +34,14 @@ Running this command will:
   * Lints TypeScript
   * Pretty prints everything it can process
 - Updates your `.gitignore` to include some more files, or adds one if missing
-- Adds a `public` folder with a HTML template and a configuration file<sup>[[2]](#Footnotes)</sup>.
+- Adds a `public` folder with a HTML template and a configuration file<sup>[[2]](#footnotes)</sup>.
 - Adds/updates your package's `start`, `build` `prepublishOnly`, and `test` scripts to:
   * `start`: runs [`webpack-serve`](https://github.com/webpack-contrib/webpack-serve) with any extra configuration passed in as flags.
-  * `build`: see [Build Script](#Build Script).
+  * `build`: see [Build Script](#build-script).
   * `test`: runs [Jest](https://github.com/facebook/jest) with.
   * `prePublishOnly`: checks if the `"main"` file in your `package.json` actually exists before npm publish.
-- Update your package's `main` file. (See [Build Script](#Build Script))
-  * Our [predefined webpack configuration](#Webpack Configuration) sets an output file path. We mirror this path in your package's `main` file.
+- Update your package's `main` file. (See [Build Script](#build-script))
+  * Our [predefined webpack configuration](#webpack-configuration) sets an output file path. We mirror this path in your package's `main` file.
 
 ## Nuances
 
