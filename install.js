@@ -4,8 +4,8 @@ const { execSync } = require("child_process");
 const { sync: pkgDir } = require("pkg-dir");
 const Listr = require("listr");
 
+const legacyArtefacts = ["tslint.json", "tsconfig.json", ".prettierrc"];
 const removeLegacyArtefacts = packageRoot => {
-  const legacyArtefacts = ["tslint.json", "tsconfig.json", ".prettierrc"];
   const removeArtefact = artefact => {
     const contextArtefactPath = join(packageRoot, artefact);
     const ourArtefactPath = join(__dirname, artefact);
@@ -37,7 +37,7 @@ const installGitIgnore = (packageRoot, task) => {
       .filter(line => !legacyArtefacts.includes(line))
       .join("\n");
     writeFileSync(dest, fileContents);
-    execSync(`echo ".prettierrc\ntsconfig.json" >> ${dest}`);
+    execSync(`echo ".prettierrc\ntsconfig.json\ntslint.json" >> ${dest}`);
     task.skip(".gitignore already exists. Amending...");
     return;
   }

@@ -4,7 +4,7 @@ const { execSync } = require("child_process");
 const projectDir = execSync(`find ${process.cwd()}/node_modules`)
   .toString()
   .split("\n")[0];
-const operationalScripts = `${projectDir}/operational-scripts`;
+const operationalScripts = `${projectDir}/@operational/scripts`;
 
 try {
   return execSync(`${projectDir}/.bin/lint-staged -c ${operationalScripts}/assets/.lintstagedrc`, {
