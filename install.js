@@ -37,7 +37,7 @@ const installGitIgnore = (packageRoot, task) => {
       .filter(line => !legacyArtefacts.includes(line))
       .join("\n");
     writeFileSync(dest, fileContents);
-    execSync(`echo ".prettierrc\ntsconfig.json" >> ${dest}`);
+    execSync(`echo ".prettierrc\ntsconfig.json\ntslint.json" >> ${dest}`);
     task.skip(".gitignore already exists. Amending...");
     return;
   }
