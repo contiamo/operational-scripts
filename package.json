@@ -29,7 +29,7 @@
   "engines": {
     "vscode": "^1.22.0"
   },
-  "version": "1.0.1-7555569",
+  "version": "1.0.1",
   "private": false,
   "license": "MIT",
   "bin": {
