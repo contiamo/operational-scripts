@@ -4,8 +4,8 @@ const { execSync } = require("child_process");
 const { sync: pkgDir } = require("pkg-dir");
 const Listr = require("listr");
 
+const legacyArtefacts = ["tslint.json", "tsconfig.json", ".prettierrc"];
 const removeLegacyArtefacts = packageRoot => {
-  const legacyArtefacts = ["tslint.json", "tsconfig.json", ".prettierrc"];
   const removeArtefact = artefact => {
     const contextArtefactPath = join(packageRoot, artefact);
     const ourArtefactPath = join(__dirname, artefact);
