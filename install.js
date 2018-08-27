@@ -1,54 +1,50 @@
-const { ensureSymlinkSync, existsSync, copySync, writeFileSync, removeSync, readFileSync } = require("fs-extra");
+const { existsSync, copySync, writeFileSync, removeSync, readFileSync } = require("fs-extra");
 const { join } = require("path");
 const { execSync } = require("child_process");
 const { sync: pkgDir } = require("pkg-dir");
 const Listr = require("listr");
+const get = require("lodash/get");
 
 const legacyArtefacts = ["tslint.json", "tsconfig.json", ".prettierrc"];
 const removeLegacyArtefacts = packageRoot => {
   const removeArtefact = artefact => {
     const contextArtefactPath = join(packageRoot, artefact);
     const ourArtefactPath = join(__dirname, artefact);
-
-    // Remove versioning of assets, fail silently if they don't exist.
     removeSync(contextArtefactPath);
-    execSync(`git rm --cached ${contextArtefactPath} || true`);
-    ensureSymlinkSync(ourArtefactPath, contextArtefactPath);
+    copySync(ourArtefactPath, contextArtefactPath);
+    
+    /**
+      * Remove versioning of copied-over assets
+      * since they're copied over postinstall, 
+      * fail "silently" if they don't exist.
+      */
+    execSync(`git rm --cached ${contextArtefactPath} || echo "No cached artefacts to remove. Continuing…"`);
   };
   legacyArtefacts.forEach(removeArtefact);
 };
 
-const installPreCommit = packageRoot => {
+const installPreCommit = (packageRoot, task) => {
   const dest = join(packageRoot, ".git/hooks/pre-commit");
   const src = join(__dirname, "./assets/pre-commit");
   try {
     copySync(src, dest);
   } catch (e) {
-    throw e;
+    task.skip("No git repository found. Skipping…");
   }
 };
 
 const installGitIgnore = (packageRoot, task) => {
-  const dest = join(packageRoot, ".gitignore");
-  if (existsSync(dest)) {
-    const contents = readFileSync(dest, "utf8");
-    const fileContents = contents
-      .split("\n")
-      .filter(line => !legacyArtefacts.includes(line))
-      .join("\n");
-    writeFileSync(dest, fileContents);
-    execSync(`echo ".prettierrc\ntsconfig.json\ntslint.json" >> ${dest}`);
-    task.skip(".gitignore already exists. Amending...");
-    return;
-  }
+  const gitignorePath = join(packageRoot, ".gitignore");
+  const npmignorePath = join(__dirname, ".npmignore");
 
-  const src = join(__dirname, ".npmignore");
-  try {
-    copySync(src, dest);
-    execSync(`echo ".prettierrc\ntsconfig.json" >> ${dest}`);
-  } catch (e) {
-    throw e;
-  }
+  const src = existsSync(gitignorePath) ? gitignorePath : npmignorePath;
+  const contents = readFileSync(src, "utf8");
+  const fileContents = [
+    ...contents.split("\n").filter(line => !legacyArtefacts.includes(line)),
+    ...legacyArtefacts,
+  ].join("\n");
+
+  writeFileSync(gitignorePath, fileContents);
 };
 
 const installStaticFiles = (packageRoot, task) => {
@@ -75,10 +71,10 @@ const addScripts = packageRoot => {
     }
 
     // Cover your eyes, functional friends – mutation time!
-    if (!packageJson.scripts.start.includes("operational-scripts")) {
+    if (!get(packageJson, "scripts.start", "").includes("operational-scripts")) {
       packageJson.scripts.start = "operational-scripts start";
     }
-    if (!packageJson.scripts.build.includes("operational-scripts")) {
+    if (!get(packageJson, "scripts.build", "").includes("operational-scripts")) {
       packageJson.scripts.build = "operational-scripts build";
     }
 
@@ -113,6 +109,15 @@ const addMain = (packageRoot, task) => {
   }
 };
 
+const formatFiles = packageRoot => {
+  execSync(
+    `${packageRoot}/node_modules/.bin/prettier ./**/*.{json,ts,tsx,js,jsx,md} --write --config ${join(
+      __dirname,
+      ".prettierrc",
+    )}`,
+  );
+};
+
 try {
   const packageRoot = pkgDir(join(__dirname, ".."));
   if (!packageRoot) {
@@ -128,7 +133,7 @@ try {
       task: installPreCommit,
     },
     {
-      title: "Install gitignore",
+      title: "Install/Update gitignore",
       task: installGitIgnore,
     },
     {
@@ -142,6 +147,10 @@ try {
     {
       title: 'Add "main" file',
       task: addMain,
+    },
+    {
+      title: "Reformat code in project",
+      task: formatFiles,
     },
 
     /**
