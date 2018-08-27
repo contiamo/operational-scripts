@@ -30,25 +30,17 @@ const installPreCommit = (packageRoot, task) => {
 };
 
 const installGitIgnore = (packageRoot, task) => {
-  const dest = join(packageRoot, ".gitignore");
-  if (existsSync(dest)) {
-    const contents = readFileSync(dest, "utf8");
-    const fileContents = [
-      ...contents.split("\n").filter(line => !legacyArtefacts.includes(line)),
-      ...legacyArtefacts,
-    ].join("\n");
-    writeFileSync(dest, fileContents);
-    task.skip(".gitignore already exists. Amending…");
-    return;
-  }
+  const gitignorePath = join(packageRoot, ".gitignore");
+  const npmignorePath = join(__dirname, ".npmignore");
 
-  const src = join(__dirname, ".npmignore");
-  try {
-    copySync(src, dest);
-    execSync(`echo ".prettierrc\ntsconfig.json" >> ${dest}`);
-  } catch (e) {
-    throw e;
-  }
+  const src = existsSync(gitignorePath) ? gitignorePath : npmignorePath;
+  const contents = readFileSync(src, "utf8");
+  const fileContents = [
+    ...contents.split("\n").filter(line => !legacyArtefacts.includes(line)),
+    ...legacyArtefacts,
+  ].join("\n");
+
+  writeFileSync(gitignorePath, fileContents);
 };
 
 const installStaticFiles = (packageRoot, task) => {
@@ -128,7 +120,7 @@ try {
       task: installPreCommit,
     },
     {
-      title: "Install gitignore",
+      title: "Install/Update gitignore",
       task: installGitIgnore,
     },
     {
