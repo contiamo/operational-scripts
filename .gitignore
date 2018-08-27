@@ -90,6 +90,9 @@ typings/
 # dotenv environment variables file
 .env
 
+lib
+dist
+
 #!! ERROR: vscode is undefined. Use list command to see defined gitignore types !!#
 
 
