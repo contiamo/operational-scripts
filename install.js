@@ -10,11 +10,15 @@ const removeLegacyArtefacts = packageRoot => {
   const removeArtefact = artefact => {
     const contextArtefactPath = join(packageRoot, artefact);
     const ourArtefactPath = join(__dirname, artefact);
-
-    // Remove versioning of assets, fail "silently" if they don't exist.
     removeSync(contextArtefactPath);
-    execSync(`git rm --cached ${contextArtefactPath} || echo "No cached artefacts to remove. Continuing…"`);
     copySync(ourArtefactPath, contextArtefactPath);
+    
+    /**
+      * Remove versioning of copied-over assets
+      * since they're copied over postinstall, 
+      * fail "silently" if they don't exist.
+      */
+    execSync(`git rm --cached ${contextArtefactPath} || echo "No cached artefacts to remove. Continuing…"`);
   };
   legacyArtefacts.forEach(removeArtefact);
 };
