@@ -1,4 +1,4 @@
-const { ensureSymlinkSync, existsSync, copySync, writeFileSync, removeSync, readFileSync } = require("fs-extra");
+const { existsSync, copySync, writeFileSync, removeSync, readFileSync } = require("fs-extra");
 const { join } = require("path");
 const { execSync } = require("child_process");
 const { sync: pkgDir } = require("pkg-dir");
@@ -13,7 +13,7 @@ const removeLegacyArtefacts = packageRoot => {
     // Remove versioning of assets, fail "silently" if they don't exist.
     removeSync(contextArtefactPath);
     execSync(`git rm --cached ${contextArtefactPath} || echo "No cached artefacts to remove. Continuing…"`);
-    ensureSymlinkSync(ourArtefactPath, contextArtefactPath);
+    copySync(ourArtefactPath, contextArtefactPath);
   };
   legacyArtefacts.forEach(removeArtefact);
 };
