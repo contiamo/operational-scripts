@@ -18,9 +18,13 @@ const removeLegacyArtefacts = packageRoot => {
      * since they're copied over postinstall,
      * fail silently if they don't exist.
      */
-    execSync(`git rm --cached ${contextArtefactPath}`, {
-      stdio: "ignore",
-    });
+    try {
+      execSync(`git rm --cached ${contextArtefactPath}`, {
+        stdio: "ignore",
+      });
+    } catch {
+      // Here's the fail silently part.
+    }
   };
   legacyArtefacts.forEach(removeArtefact);
 };
