@@ -105,6 +105,15 @@ const addMain = (packageRoot, task) => {
   }
 };
 
+const formatFiles = packageRoot => {
+  execSync(
+    `${packageRoot}/node_modules/.bin/prettier ./**/*.{json,ts,tsx,js,jsx,md} --write --config ${join(
+      __dirname,
+      ".prettierrc",
+    )}`,
+  );
+};
+
 try {
   const packageRoot = pkgDir(join(__dirname, ".."));
   if (!packageRoot) {
@@ -134,6 +143,10 @@ try {
     {
       title: 'Add "main" file',
       task: addMain,
+    },
+    {
+      title: "Format files",
+      task: formatFiles,
     },
 
     /**
