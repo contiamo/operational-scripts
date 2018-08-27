@@ -18,13 +18,13 @@ const removeLegacyArtefacts = packageRoot => {
   legacyArtefacts.forEach(removeArtefact);
 };
 
-const installPreCommit = packageRoot => {
+const installPreCommit = (packageRoot, task) => {
   const dest = join(packageRoot, ".git/hooks/pre-commit");
   const src = join(__dirname, "./assets/pre-commit");
   try {
     copySync(src, dest);
   } catch (e) {
-    throw e;
+    task.skip("No git repository found. Skipping…");
   }
 };
 
@@ -38,7 +38,7 @@ const installGitIgnore = (packageRoot, task) => {
       .join("\n");
     writeFileSync(dest, fileContents);
     execSync(`echo ".prettierrc\ntsconfig.json\ntslint.json" >> ${dest}`);
-    task.skip(".gitignore already exists. Amending...");
+    task.skip(".gitignore already exists. Amending…");
     return;
   }
 
