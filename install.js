@@ -22,7 +22,7 @@ const removeLegacyArtefacts = packageRoot => {
       execSync(`git rm --cached ${contextArtefactPath}`, {
         stdio: "ignore",
       });
-    } catch {
+    } catch (e) {
       // Here's the fail silently part.
     }
   };
