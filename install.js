@@ -149,7 +149,7 @@ try {
       task: addMain,
     },
     {
-      title: "Format files",
+      title: "Reformat code in project",
       task: formatFiles,
     },
 
