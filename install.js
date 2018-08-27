@@ -3,6 +3,7 @@ const { join } = require("path");
 const { execSync } = require("child_process");
 const { sync: pkgDir } = require("pkg-dir");
 const Listr = require("listr");
+const get = require("lodash/get");
 
 const legacyArtefacts = ["tslint.json", "tsconfig.json", ".prettierrc"];
 const removeLegacyArtefacts = packageRoot => {
@@ -74,10 +75,10 @@ const addScripts = packageRoot => {
     }
 
     // Cover your eyes, functional friends – mutation time!
-    if (!packageJson.scripts.start.includes("operational-scripts")) {
+    if (!get(packageJson, "scripts.start", "").includes("operational-scripts")) {
       packageJson.scripts.start = "operational-scripts start";
     }
-    if (!packageJson.scripts.build.includes("operational-scripts")) {
+    if (!get(packageJson, "scripts.build", "").includes("operational-scripts")) {
       packageJson.scripts.build = "operational-scripts build";
     }
 
