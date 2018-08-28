@@ -88,6 +88,7 @@ const addScripts = packageRoot => {
 
     packageJson.scripts.prepublishOnly = "operational-scripts prepare";
     packageJson.scripts.test = "operational-scripts test";
+    packageJson.files = ["lib"];
     delete packageJson.scripts.precommit;
     delete packageJson.jest;
     delete packageJson.test;
