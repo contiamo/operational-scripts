@@ -12,18 +12,27 @@ const pathToOwnWebpackConfig = join(context, "webpack.config.js");
 const hasOwnWebpackConfig = existsSync(pathToOwnWebpackConfig);
 const webpackConfigToMerge = hasOwnWebpackConfig ? require(pathToOwnWebpackConfig) : {};
 
-const package = JSON.parse(readFileSync(join(context, "package.json")));
+/**
+ * Return the current version of the app.
+ *
+ * Format: `${package.json:version}-${gitShortSha}`
+ * or just the package version if git is not available.
+ */
+function getVersion() {
+  const package = JSON.parse(readFileSync(join(context, "package.json")));
+  let version = package.version;
 
-let gitVersion = package.version;
+  try {
+    version +=
+      "-" +
+      execSync("git rev-parse --short HEAD")
+        .toString()
+        .trim();
+  } catch (e) {
+    console.log(e.message);
+  }
 
-try {
-  gitVersion +=
-    "-" +
-    execSync("git rev-parse --short HEAD")
-      .toString()
-      .trim();
-} catch (e) {
-  console.log(e.message);
+  return version;
 }
 
 const defaultConfig = {
@@ -60,13 +69,14 @@ const defaultConfig = {
   plugins: [
     new DashboardPlugin(),
     new webpack.EnvironmentPlugin({
-      GIT_VERSION: gitVersion,
+      VERSION: getVersion(), // Accessible in the js with: `process.env.VERSION`
     }),
     new HtmlWebpackPlugin({
       chunksSortMode: "manual",
       // The `config` chunk must come before `main` to make sure that runtime configuration variables are loaded
       chunks: ["config", "main"],
       template: join(context, "public/index.html"),
+      version: getVersion(), // Accessible in the html with: `<%= htmlWebpackPlugin.options.version %>`
     }),
   ],
 };
