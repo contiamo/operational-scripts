@@ -12,13 +12,12 @@ const pathToOwnWebpackConfig = join(context, "webpack.config.js");
 const hasOwnWebpackConfig = existsSync(pathToOwnWebpackConfig);
 const webpackConfigToMerge = hasOwnWebpackConfig ? require(pathToOwnWebpackConfig) : {};
 
-function getGitShortSha() {
-  return execSync("git rev-parse --short HEAD")
+const getGitShortSha = () =>
+  execSync("git rev-parse --short HEAD")
     .toString()
     .trim();
-}
 
-function getVersion() {
+const getVersion = () => {
   const package = JSON.parse(readFileSync(join(context, "package.json")));
   try {
     return `${package.version}-${getGitShortSha()}`;
@@ -26,7 +25,7 @@ function getVersion() {
     console.log(e.message);
     return package.version;
   }
-}
+};
 
 const defaultConfig = {
   mode: process.env.NODE_ENV || "development",
