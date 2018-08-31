@@ -12,27 +12,20 @@ const pathToOwnWebpackConfig = join(context, "webpack.config.js");
 const hasOwnWebpackConfig = existsSync(pathToOwnWebpackConfig);
 const webpackConfigToMerge = hasOwnWebpackConfig ? require(pathToOwnWebpackConfig) : {};
 
-/**
- * Return the current version of the app.
- *
- * Format: `${package.json:version}-${gitShortSha}`
- * or just the package version if git is not available.
- */
+function getGitShortSha() {
+  return execSync("git rev-parse --short HEAD")
+    .toString()
+    .trim();
+}
+
 function getVersion() {
   const package = JSON.parse(readFileSync(join(context, "package.json")));
-  let version = package.version;
-
   try {
-    version +=
-      "-" +
-      execSync("git rev-parse --short HEAD")
-        .toString()
-        .trim();
+    return `${package.version}-${getGitShortSha()}`;
   } catch (e) {
     console.log(e.message);
+    return package.version;
   }
-
-  return version;
 }
 
 const defaultConfig = {
