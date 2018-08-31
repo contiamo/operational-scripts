@@ -1,5 +1,7 @@
 # Operational Scripts
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/contiamo/operational-scripts.svg)](https://greenkeeper.io/)
+
 > scaffolding for web applications
 
 At Contiamo, we deal with a number of different UI projects written in TypeScript. Each project begins as a [greenfield project](https://en.wikipedia.org/wiki/Greenfield_project) and usually is scaffolded with starter scripts configured to handle things like [code style settings](https://prettier.io/docs/en/configuration.html), TypeScript compiler options, [linting](https://palantir.github.io/tslint/), [precommit hooks on git](https://git-scm.com/book/en/v2/Customizing-Git-Git-Hooks), _et cetera_. This starter then grows organically, while its scaffolding scripts go through a number of tweaks.
