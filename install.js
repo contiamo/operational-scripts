@@ -46,11 +46,12 @@ const installGitIgnore = (packageRoot, task) => {
   const src = existsSync(gitignorePath) ? gitignorePath : npmignorePath;
   const contents = readFileSync(src, "utf8");
   const comment = "# Files managed by operational-scripts";
-  const fileContents = [
-    ...contents.split("\n").filter(line => ![comment, ...legacyArtefacts].includes(line)),
-    comment,
-    ...legacyArtefacts,
-  ].join("\n");
+  const fileContents =
+    [
+      ...contents.split("\n").filter(line => ![comment, ...legacyArtefacts].includes(line)),
+      comment,
+      ...legacyArtefacts,
+    ].join("\n") + "\n";
 
   writeFileSync(gitignorePath, fileContents);
 };
