@@ -35,8 +35,8 @@ const defaultConfig = {
     config: join(context, "public/config"),
   },
   output: {
-    filename: "[name].js",
-    chunkFilename: "[name].js",
+    filename: "[name].[chunkhash].js",
+    chunkFilename: "[name].[chunkhash].js",
     path: join(context, "dist"),
     publicPath: "/",
   },
