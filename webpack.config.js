@@ -17,7 +17,7 @@ const getGitShortSha = () =>
     .toString()
     .trim();
 
-const getVersion = () => {
+const version = (() => {
   const package = JSON.parse(readFileSync(join(context, "package.json")));
   try {
     return `${package.version}-${getGitShortSha()}`;
@@ -25,7 +25,7 @@ const getVersion = () => {
     console.log(e.message);
     return package.version;
   }
-};
+})();
 
 const defaultConfig = {
   mode: process.env.NODE_ENV || "development",
@@ -61,14 +61,14 @@ const defaultConfig = {
   plugins: [
     new DashboardPlugin(),
     new webpack.EnvironmentPlugin({
-      VERSION: getVersion(), // Accessible in the js with: `process.env.VERSION`
+      VERSION: version, // Accessible in the js with: `process.env.VERSION`
     }),
     new HtmlWebpackPlugin({
       chunksSortMode: "manual",
       // The `config` chunk must come before `main` to make sure that runtime configuration variables are loaded
       chunks: ["config", "main"],
       template: join(context, "public/index.html"),
-      version: getVersion(), // Accessible in the html with: `<%= htmlWebpackPlugin.options.version %>`
+      version, // Accessible in the html with: `<%= htmlWebpackPlugin.options.version %>`
     }),
   ],
 };
