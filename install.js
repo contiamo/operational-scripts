@@ -78,7 +78,7 @@ const installStaticFiles = (packageRoot, task) => {
  * This method mutates the `packageJson` argument passed in.
  */
 const replaceScripts = (scripts, packageJson) => {
-  Object.entries(scripts).forEach(scriptData => {
+  Object.entries(scripts).forEach(([scriptName, scriptContents]) => {
     const scriptName = scriptData[0]
     const scriptContents = scriptData[1]
     if (!packageJson.scripts[scriptName]) {
