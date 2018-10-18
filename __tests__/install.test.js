@@ -1,17 +1,17 @@
 const installMethods = require("../install.js");
 
-describe("replaceScripts", () => {
+describe("addDefaultScripts", () => {
   it("replaces scripts", () => {
     const packageJson = {
       scripts: {
-        // This is left intact because it already contains the specified default script
+        // This is left intact because it is already set
         start: "startScript && echo 'hello'",
         // The `build` script is added since it doesn't exist
-        // The `test` script is replaced since it doesn't contain the specified default script
-        test: "wrongTestScript"
+        // The `test` script is replaced since it is falsy
+        test: ""
       },
     };
-    installMethods.replaceScripts(
+    installMethods.addDefaultScripts(
       {
         start: "startScript",
         build: "buildScript",

@@ -77,16 +77,11 @@ const installStaticFiles = (packageRoot, task) => {
  * it is inserted with everything else removed.
  * This method mutates the `packageJson` argument passed in.
  */
-const replaceScripts = (scripts, packageJson) => {
+const addDefaultScripts = (scripts, packageJson) => {
   Object.entries(scripts).forEach(([scriptName, scriptContents]) => {
     if (!packageJson.scripts[scriptName]) {
       packageJson.scripts[scriptName] = scriptContents;
-      return;
     }
-    if (packageJson.scripts[scriptName].includes(scriptContents)) {
-      return;
-    }
-    packageJson.scripts[scriptName] = scriptContents;
   });
 };
 
@@ -99,7 +94,7 @@ const addScripts = packageRoot => {
       packageJson.scripts = {};
     }
 
-    replaceScripts(
+    addDefaultScripts(
       {
         start: "operational-scripts start",
         build: "operational-scripts build",
@@ -116,7 +111,7 @@ const addScripts = packageRoot => {
     delete packageJson.lint;
     delete packageJson["lint-staged"];
 
-    writeFileSync(pathToPackageJson, JSON.stringify(packageJson, 2, 2));
+    writeFileSync(pathToPackageJson, JSON.stringify(packageJson, null, 2));
   } catch (e) {
     throw e;
   }
@@ -132,7 +127,7 @@ const addMain = (packageRoot, task) => {
       return;
     }
     packageJson.main = "./dist/main.js";
-    writeFileSync(pathToPackageJson, JSON.stringify(packageJson, 2, 2));
+    writeFileSync(pathToPackageJson, JSON.stringify(packageJson, null, 2));
   } catch (e) {
     throw e;
   }
@@ -189,5 +184,5 @@ try {
 
 // Methods exported for tests
 module.exports = {
-  replaceScripts: replaceScripts
+  addDefaultScripts
 }
