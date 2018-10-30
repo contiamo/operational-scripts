@@ -70,6 +70,21 @@ const installStaticFiles = (packageRoot, task) => {
   }
 };
 
+/**
+ * Replace a script inside `package.json` if it doesn't contain the expected default script.
+ * This ensures that users can add script snippets representing custom needs inside these scripts
+ * without having their changes overridden on installation. If the default script is not contained, however,
+ * it is inserted with everything else removed.
+ * This method mutates the `packageJson` argument passed in.
+ */
+const addDefaultScripts = (scripts, packageJson) => {
+  Object.entries(scripts).forEach(([scriptName, scriptContents]) => {
+    if (!packageJson.scripts[scriptName]) {
+      packageJson.scripts[scriptName] = scriptContents;
+    }
+  });
+};
+
 const addScripts = packageRoot => {
   const pathToPackageJson = join(packageRoot, "package.json");
 
@@ -79,16 +94,15 @@ const addScripts = packageRoot => {
       packageJson.scripts = {};
     }
 
-    // Cover your eyes, functional friends – mutation time!
-    if (!get(packageJson, "scripts.start", "").includes("operational-scripts")) {
-      packageJson.scripts.start = "operational-scripts start";
-    }
-    if (!get(packageJson, "scripts.build", "").includes("operational-scripts")) {
-      packageJson.scripts.build = "operational-scripts build";
-    }
-
-    packageJson.scripts.prepublishOnly = "operational-scripts prepare";
-    packageJson.scripts.test = "operational-scripts test";
+    addDefaultScripts(
+      {
+        start: "operational-scripts start",
+        build: "operational-scripts build",
+        prepublishOnly: "operational-scripts prepare",
+        test: "operational-scripts test",
+      },
+      packageJson,
+    );
     packageJson.files = ["lib"];
     delete packageJson.scripts.precommit;
     delete packageJson.jest;
@@ -97,7 +111,7 @@ const addScripts = packageRoot => {
     delete packageJson.lint;
     delete packageJson["lint-staged"];
 
-    writeFileSync(pathToPackageJson, JSON.stringify(packageJson));
+    writeFileSync(pathToPackageJson, JSON.stringify(packageJson, null, 2));
   } catch (e) {
     throw e;
   }
@@ -113,7 +127,7 @@ const addMain = (packageRoot, task) => {
       return;
     }
     packageJson.main = "./dist/main.js";
-    writeFileSync(pathToPackageJson, JSON.stringify(packageJson));
+    writeFileSync(pathToPackageJson, JSON.stringify(packageJson, null, 2));
   } catch (e) {
     throw e;
   }
@@ -162,34 +176,13 @@ try {
       title: "Reformat code in project",
       task: formatFiles,
     },
-
-    /**
-     * Add this for a more create-react-app example,
-     * maybe we'll need this later.
-     */
-    // {
-    //   title: "Add sample app",
-    //   task: addApp,
-    // },
   ]);
   tasks.run(packageRoot);
 } catch (e) {
   console.error(e);
 }
 
-/**
- *  This would give you a react app out of the
- * box, but let's not use it for now.
- */
-
-// const addApp = (packageRoot, task) => {
-//   if (pathExistsSync(join(packageRoot, "src"))) {
-//     task.skip("`src` folder already exists");
-//     return;
-//   }
-//   try {
-//     copySync(join(__dirname, "assets/src"), join(packageRoot, "src"));
-//   } catch (e) {
-//     throw e;
-//   }
-// };
+// Methods exported for tests
+module.exports = {
+  addDefaultScripts
+}
