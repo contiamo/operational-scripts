@@ -4,7 +4,7 @@ module.exports = {
   globals: {
     "ts-jest": {
       tsConfig: join(__dirname, "tsconfig.jest.json"),
-      diagnostics: false,
+      diagnostics: false, /** @todo remove this when our dependent tests are type safe */
     },
   },
   transform: {
