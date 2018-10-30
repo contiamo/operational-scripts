@@ -41,7 +41,8 @@
   "scripts": {
     "precommit": "lint-staged",
     "postinstall": "node install.js",
-    "test": "jest",
+    "lint": "tslint --project .",
+    "test": "jest --outFile test-results.json",
     "ci": "[ ! -z $DANGER_GITHUB_API_TOKEN ] && yarn danger ci || echo \"Skipping Danger for External Contributor\""
   },
   "files": [
