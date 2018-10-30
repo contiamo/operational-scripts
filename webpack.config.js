@@ -28,7 +28,7 @@ const getVersion = () => {
 };
 
 const defaultConfig = {
-  mode: process.env.NODE_ENV || "development",
+  mode: process.env.NODE_ENV === "production" ? "production" : "development",
   context,
   entry: {
     main: join(context, "src/index"),

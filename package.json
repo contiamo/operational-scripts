@@ -1,7 +1,12 @@
 {
   "name": "@operational/scripts",
   "description": "A TypeScript first toolchain for developing front-end applications",
-  "keywords": ["typescript", "boilerplate", "starter", "configuration"],
+  "keywords": [
+    "typescript",
+    "boilerplate",
+    "starter",
+    "configuration"
+  ],
   "bugs": {
     "email": "tejas@contiamo.com",
     "url": "https://github.com/contiamo/operational-scripts/issues"
@@ -26,9 +31,6 @@
     "url": "https://github.com/contiamo/operational-scripts"
   },
   "homepage": "https://www.contiamo.com",
-  "engines": {
-    "vscode": "^1.22.0"
-  },
   "version": "1.1.2",
   "private": false,
   "license": "MIT",
@@ -80,7 +82,7 @@
     "webpack-cli": "^3.1.0",
     "webpack-dashboard": "^2.0.0",
     "webpack-merge": "^4.1.4",
-    "webpack-serve": "^2.0.2",
+    "webpack-dev-server": "^3.1.10",
     "yargs-parser": "^10.1.0"
   },
   "devDependencies": {
