@@ -7,7 +7,7 @@ const { removeSync, readFileSync } = require("fs-extra");
 const { existsSync } = require("fs");
 const parseYargs = require("yargs-parser");
 const Listr = require("listr");
-const serve = require("webpack-serve");
+const serve = require("webpack-dev-server");
 
 const history = require("connect-history-api-fallback");
 const convert = require("koa-connect");
@@ -97,38 +97,7 @@ switch (script) {
     break;
 
   case "start":
-    /**
-     * _ is actually part of the returned object from
-     * parseYargs that we want to remove.
-     */
-    const { _, https, ...forwardedYargs } = parseYargs(forwardedArgs);
-    const startServer = httpsProps =>
-      serve(forwardedYargs, {
-        https: Boolean(httpsProps)
-          ? {
-              key: httpsProps.serviceKey,
-              cert: httpsProps.certificate,
-            }
-          : null,
-        content: join(context, "public"),
-        config: join(__dirname, "webpack.config.js"),
-        add: app => {
-          /**
-           * This makes 404s fall back to index.html
-           * and makes react-router possible.
-           */
-          app.use(convert(history()));
-        },
-      });
-
-    https
-      ? createCertificate({ days: 1, selfSigned: true }, (err, httpsProps) => {
-          if (err) {
-            throw "Could not start dev server because " + err;
-          }
-          startServer(httpsProps);
-        })
-      : startServer();
+    properExec("webpack-dev-server", ["--config", join(__dirname, "webpack.config.js")]);
     break;
 
   case "build":

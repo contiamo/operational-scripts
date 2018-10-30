@@ -3,7 +3,8 @@ const { join } = require("path");
 module.exports = {
   globals: {
     "ts-jest": {
-      tsConfigFile: join(__dirname, "tsconfig.jest.json"),
+      tsConfig: join(__dirname, "tsconfig.jest.json"),
+      diagnostics: false,
     },
   },
   transform: {
