@@ -42,7 +42,7 @@
     "precommit": "lint-staged",
     "postinstall": "node install.js",
     "lint": "tslint --project .",
-    "test": "jest --outFile test-results.json",
+    "test": "node index.js test --json --outputFile=tslint-errors.json",
     "ci": "[ ! -z $DANGER_GITHUB_API_TOKEN ] && yarn danger ci || echo \"Skipping Danger for External Contributor\""
   },
   "files": [
