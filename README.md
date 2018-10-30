@@ -11,41 +11,48 @@ While this starter is no silver bullet to end all onboarding and scalable mainta
 Ideally, with this starter, everything _just works_ so long as we have a reasonable project structure<sup>[[1]](#footnotes)</sup>.
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
-
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+
+- [Getting Started](#getting-started)
+- [Nuances](#nuances)
+  - [Build Script](#build-script)
+  - [Webpack](#webpack)
+- [Contributing](#contributing)
+- [Footnotes](#footnotes)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
-* [Getting Started](#getting-started)
-* [Nuances](#nuances)
-  * [Build Script](#build-script)
-  * [Webpack](#webpack)
-* [Contributing](#contributing)
-* [Footnotes](#footnotes)
+- [Getting Started](#getting-started)
+- [Nuances](#nuances)
+  - [Build Script](#build-script)
+  - [Webpack](#webpack)
+- [Contributing](#contributing)
+- [Footnotes](#footnotes)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
 ## Getting Started
 
-* `npm install @operational/scripts -D`
+- `npm install @operational/scripts -D`
 
 Running this command will:
 
-* Replace any scaffolding: TypeScript configuration (`tsconfig.json`), `tslint.json` and `.prettierrc` in your current project with our recommendations.
+- Replace any scaffolding: TypeScript configuration (`tsconfig.json`), `tslint.json` and `.prettierrc` in your current project with our recommendations.
 
-- Install a precommit hook that, before commit:
-  * Adds a table of contents to Markdown
-  * Lints TypeScript
-  * Pretty prints everything it can process: TypeScript, Markdown, JavaScript and JSON
-- Update your `.gitignore` to include some more files, or adds one if missing
-- Add a `public` folder with a starter HTML template and a configuration file<sup>[[2]](#footnotes)</sup>.
-- Adds/updates your package's scripts to:
-  * `start`: runs [`webpack-serve`](https://github.com/webpack-contrib/webpack-serve) with any extra configuration passed in as flags.
-  * `build`: runs the TypeScript compiler _and_ packages for npm. See [Build Script](#build-script) for more info.
-  * `test`: runs [Jest](https://github.com/facebook/jest) with TypeScript integration.
-  * `prePublishOnly`: checks if the `"main"` file in your `package.json` actually exists before publish.
-- Updates your package's `main` file.
-  * Our [starter webpack configuration](#webpack-configuration) sets an output file path. We mirror this path in your package's `main` file.
+* Install a precommit hook that, before commit:
+  - Adds a table of contents to Markdown
+  - Lints TypeScript
+  - Pretty prints everything it can process: TypeScript, Markdown, JavaScript and JSON
+* Update your `.gitignore` to include some more files, or adds one if missing
+* Add a `public` folder with a starter HTML template and a configuration file<sup>[[2]](#footnotes)</sup>.
+* Adds the following scripts to your `package.json` **only if they don't already exist**:
+  - `start`: runs [`webpack-serve`](https://github.com/webpack-contrib/webpack-serve) with any extra configuration passed in as flags.
+  - `build`: runs the TypeScript compiler _and_ packages for npm. See [Build Script](#build-script) for more info.
+  - `test`: runs [Jest](https://github.com/facebook/jest) with TypeScript integration.
+  - `prePublishOnly`: checks if the `"main"` file in your `package.json` actually exists before publish.
+* Updates your package's `main` file.
+  - Our [starter webpack configuration](#webpack-configuration) sets an output file path. We mirror this path in your package's `main` file.
 
 ## Nuances
 
@@ -78,5 +85,5 @@ Issues, Pull Requests and extensions are welcome. No question is a silly questio
 
 ## Footnotes
 
-* [1] **Reasonable Project Structure**: your code lives in `src` at the root of your project.
-* [2] **config.js**: at Contiamo, we try to expose _some_ runtime configuration of our applications in order to have more flexible frontend deployments, allowing our Ops team to pass in certain configuration values as [Kubernetes configmaps](https://kubernetes.io/docs/tasks/configure-pod-container/configure-pod-configmap/). This file is _completely optional_ and does not _need_ a place in your codebase: it can be safely deleted if you do not need it.
+- [1] **Reasonable Project Structure**: your code lives in `src` at the root of your project.
+- [2] **config.js**: at Contiamo, we try to expose _some_ runtime configuration of our applications in order to have more flexible frontend deployments, allowing our Ops team to pass in certain configuration values as [Kubernetes configmaps](https://kubernetes.io/docs/tasks/configure-pod-container/configure-pod-configmap/). This file is _completely optional_ and does not _need_ a place in your codebase: it can be safely deleted if you do not need it.
