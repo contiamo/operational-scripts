@@ -18,6 +18,7 @@ Ideally, with this starter, everything _just works_ so long as we have a reasona
 - [Nuances](#nuances)
   - [Build Script](#build-script)
   - [Webpack](#webpack)
+    - [Function Webpack Configs](#function-webpack-configs)
 - [Contributing](#contributing)
 - [Footnotes](#footnotes)
 
@@ -78,6 +79,14 @@ For this reason, **our Webpack configuration is patchable**.
 Simply place a `webpack.config.js` at the root of your project, and any settings in there will override our defaults. Any settings _not_ in there will fall back to our defaults.
 
 This allows _some_ control, while abstracting away most other complexity.
+
+#### Function Webpack Configs
+
+In most common cases, webpack configurations are expressed as plain old JavaScript objects. However, in other cases, users might wish to use a function as a `module.export`ed webpack configuration.
+
+Operational Scripts works with this, but has one rule: **the function must use reasonable default parameters**. The reason for this, is that Operational Scripts merges its _own webpack config_ with the return of the custom webpack configuration function. At the time it invokes this function, it has no idea what to pass in as arguments. Therefore, defaults make sense here.
+
+If your use case requires something _even more custom_, perhaps going _full custom_ without Operational Scripts might make more sense in that case. If you're unsure, you are _always_ welcome to [open an issue](https://github.com/contiamo/operational-scripts/issues/new) and we can have a chat about it.
 
 ## Contributing
 
