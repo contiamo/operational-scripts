@@ -73,4 +73,7 @@ const defaultConfig = {
   ],
 };
 
-module.exports = merge(defaultConfig, webpackConfigToMerge);
+module.exports = merge(
+  defaultConfig,
+  typeof webpackConfigToMerge === "function" ? webpackConfigToMerge() : webpackConfigToMerge,
+);
