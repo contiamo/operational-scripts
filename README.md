@@ -12,22 +12,12 @@ Ideally, with this starter, everything _just works_ so long as we have a reasona
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
-<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
 - [Getting Started](#getting-started)
 - [Nuances](#nuances)
   - [Build Script](#build-script)
   - [Webpack](#webpack)
     - [Function Webpack Configs](#function-webpack-configs)
-- [Contributing](#contributing)
-- [Footnotes](#footnotes)
-
-<!-- END doctoc generated TOC please keep comment here to allow auto update -->
-
-- [Getting Started](#getting-started)
-- [Nuances](#nuances)
-  - [Build Script](#build-script)
-  - [Webpack](#webpack)
 - [Contributing](#contributing)
 - [Footnotes](#footnotes)
 
