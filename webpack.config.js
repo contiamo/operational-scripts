@@ -44,7 +44,7 @@ const defaultConfig = {
     fs: "empty",
   },
   devServer: {
-    publicPath: join(context, "public"),
+    contentBase: join(context, "public"),
   },
   module: {
     rules: [
