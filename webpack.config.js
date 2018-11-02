@@ -43,6 +43,9 @@ const defaultConfig = {
   node: {
     fs: "empty",
   },
+  devServer: {
+    publicPath: join(context, "public"),
+  },
   module: {
     rules: [
       {
