@@ -8,7 +8,7 @@ describe("addDefaultScripts", () => {
         start: "startScript && echo 'hello'",
         // The `build` script is added since it doesn't exist
         // The `test` script is replaced since it is falsy
-        test: ""
+        test: "",
       },
     };
     installMethods.addDefaultScripts(
@@ -23,7 +23,7 @@ describe("addDefaultScripts", () => {
       scripts: {
         start: "startScript && echo 'hello'",
         build: "buildScript",
-        test: "testScript"
+        test: "testScript",
       },
     });
   });

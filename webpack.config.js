@@ -3,6 +3,7 @@ const { existsSync, readFileSync } = require("fs");
 const { execSync } = require("child_process");
 const { sync: pkgDir } = require("pkg-dir");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+const CopyWebpackPlugin = require("copy-webpack-plugin");
 const DashboardPlugin = require("webpack-dashboard/plugin");
 const merge = require("webpack-merge");
 const webpack = require("webpack");
@@ -18,15 +19,16 @@ const getGitShortSha = () =>
     .trim();
 
 const getVersion = () => {
-  const package = JSON.parse(readFileSync(join(context, "package.json")));
+  const packageJson = JSON.parse(readFileSync(join(context, "package.json")));
   try {
-    return `${package.version}-${getGitShortSha()}`;
+    return `${packageJson.version}-${getGitShortSha()}`;
   } catch (e) {
     console.log(e.message);
-    return package.version;
+    return packageJson.version;
   }
 };
 
+const outputDir = join(context, "dist");
 const defaultConfig = {
   mode: process.env.NODE_ENV === "production" ? "production" : "development",
   context,
@@ -35,13 +37,24 @@ const defaultConfig = {
     config: join(context, "public/config"),
   },
   output: {
-    filename: "[name].js",
-    chunkFilename: "[name].js",
-    path: join(context, "dist"),
+    // "chunk"s here are the two entry points specified above.
+    filename: ({ chunk }) => (chunk.name === "config" ? "[name].js" : "[name].[contenthash].js"),
+
+    // These "chunks" are automatically generated with dynamic import();
+    chunkFilename: "[name].[contenthash].js",
+    path: outputDir,
     publicPath: "/",
   },
   node: {
     fs: "empty",
+  },
+  devServer: {
+    overlay: {
+      warnings: true,
+      errors: true,
+    },
+    contentBase: join(context, "public"),
+    historyApiFallback: true,
   },
   module: {
     rules: [
@@ -65,11 +78,18 @@ const defaultConfig = {
     }),
     new HtmlWebpackPlugin({
       chunksSortMode: "manual",
-      // The `config` chunk must come before `main` to make sure that runtime configuration variables are loaded
       chunks: ["config", "main"],
       template: join(context, "public/index.html"),
       version: getVersion(), // Accessible in the html with: `<%= htmlWebpackPlugin.options.version %>`
     }),
+    new CopyWebpackPlugin([
+      {
+        from: context + "/public",
+        to: outputDir,
+        ignore: ["config.js", "index.html"],
+        debug: "debug",
+      },
+    ]),
   ],
 };
 

@@ -48,7 +48,10 @@ const installGitIgnore = (packageRoot, task) => {
   const comment = "# Files managed by operational-scripts";
   const fileContents =
     [
-      ...contents.split("\n").filter(line => ![comment, ...legacyArtefacts].includes(line)),
+      ...contents
+        .trim()
+        .split("\n")
+        .filter(line => ![comment, ...legacyArtefacts].includes(line)),
       comment,
       ...legacyArtefacts,
     ].join("\n") + "\n";
@@ -184,5 +187,5 @@ try {
 
 // Methods exported for tests
 module.exports = {
-  addDefaultScripts
-}
+  addDefaultScripts,
+};
