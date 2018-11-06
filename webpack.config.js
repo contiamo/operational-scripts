@@ -74,6 +74,7 @@ const defaultConfig = {
       VERSION: getVersion(), // Accessible in the js with: `process.env.VERSION`
     }),
     new HtmlWebpackPlugin({
+      chunksSortMode: "manual",
       chunks: ["config", "main"],
       template: join(context, "public/index.html"),
       version: getVersion(), // Accessible in the html with: `<%= htmlWebpackPlugin.options.version %>`
