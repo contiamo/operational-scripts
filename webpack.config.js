@@ -38,7 +38,7 @@ const defaultConfig = {
   },
   output: {
     filename: ({ chunk }) => (chunk.name === "config" ? "[name].js" : "[name].[contenthash].js"),
-    chunkFilename: "[name].js",
+    chunkFilename: "[name].[contenthash].js",
     path: outputDir,
     publicPath: "/",
   },
