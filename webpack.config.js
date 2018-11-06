@@ -35,7 +35,7 @@ const defaultConfig = {
     config: join(context, "public/config"),
   },
   output: {
-    filename: "[name].js",
+    filename: ({ chunk }) => (chunk.name === "config" ? "[name].js" : "[name].[contenthash].js"),
     chunkFilename: "[name].js",
     path: join(context, "dist"),
     publicPath: "/",
@@ -45,6 +45,7 @@ const defaultConfig = {
   },
   devServer: {
     contentBase: join(context, "public"),
+    historyApiFallback: true,
   },
   module: {
     rules: [
@@ -67,8 +68,6 @@ const defaultConfig = {
       VERSION: getVersion(), // Accessible in the js with: `process.env.VERSION`
     }),
     new HtmlWebpackPlugin({
-      chunksSortMode: "manual",
-      // The `config` chunk must come before `main` to make sure that runtime configuration variables are loaded
       chunks: ["config", "main"],
       template: join(context, "public/index.html"),
       version: getVersion(), // Accessible in the html with: `<%= htmlWebpackPlugin.options.version %>`
