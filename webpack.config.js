@@ -37,7 +37,10 @@ const defaultConfig = {
     config: join(context, "public/config"),
   },
   output: {
+    // "chunk"s here are the two entry points specified above.
     filename: ({ chunk }) => (chunk.name === "config" ? "[name].js" : "[name].[contenthash].js"),
+
+    // These "chunks" are automatically generated with dynamic import();
     chunkFilename: "[name].[contenthash].js",
     path: outputDir,
     publicPath: "/",
