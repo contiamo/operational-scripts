@@ -1,6 +1,5 @@
 {
     "*.md": [
-      "node index.js toc",
       "node index.js prettify",
       "git add"
     ],

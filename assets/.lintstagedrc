@@ -1,6 +1,5 @@
 {
     "*.md": [
-      "operational-scripts toc",
       "operational-scripts prettify",
       "git add"
     ],
