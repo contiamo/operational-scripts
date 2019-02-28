@@ -2,17 +2,12 @@
 const { execSync, exec } = require("child_process");
 const { join } = require("path");
 const { sync: pkgDir } = require("pkg-dir");
-const { createCertificate } = require("pem");
 const { removeSync, readFileSync } = require("fs-extra");
 const { existsSync } = require("fs");
 const parseYargs = require("yargs-parser");
 const Listr = require("listr");
-const serve = require("webpack-dev-server");
 
-const history = require("connect-history-api-fallback");
-const convert = require("koa-connect");
-
-const [path, thisScript, script, ...forwardedArgs] = process.argv;
+const [_, __, script, ...forwardedArgs] = process.argv;
 const context = pkgDir(process.cwd());
 
 const localScript = scriptName => join(context, `./node_modules/.bin/${scriptName}`);
