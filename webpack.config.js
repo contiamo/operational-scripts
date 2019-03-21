@@ -30,6 +30,7 @@ const getVersion = () => {
 
 const outputDir = join(context, "dist");
 const isProduction = process.env.NODE_ENV === "production";
+
 const defaultConfig = {
   mode: isProduction ? "production" : "development",
   devtool: isProduction ? false : "cheap-module-source-map",
