@@ -2,6 +2,7 @@
   "exclude": ["node_modules", "dist", "lib", "__tests__", "**/*.test*", "**/*.spec*"],
   "include": ["src"],
   "compilerOptions": {
+    "incremental": true,
     "skipLibCheck": true,
     "target": "es5",
     "module": "esnext",
