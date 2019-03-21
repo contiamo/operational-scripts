@@ -1,5 +1,4 @@
 {
   "extends": "./tsconfig",
-  "target": "esnext",
-  "noUnusedLocals": false
+  "target": "esnext"
 }
