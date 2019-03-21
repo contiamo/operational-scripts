@@ -29,8 +29,11 @@ const getVersion = () => {
 };
 
 const outputDir = join(context, "dist");
+const isProduction = process.env.NODE_ENV === "production";
+
 const defaultConfig = {
-  mode: process.env.NODE_ENV === "production" ? "production" : "development",
+  mode: isProduction ? "production" : "development",
+  devtool: isProduction ? false : "cheap-module-source-map",
   context,
   entry: {
     main: join(context, "src/index"),
@@ -62,7 +65,7 @@ const defaultConfig = {
         test: /\.(ts|tsx)/,
         loader: "ts-loader",
         options: {
-          configFile: join(__dirname, "tsconfig.json"),
+          configFile: join(__dirname, `tsconfig.${isProduction ? "prod" : "dev"}.json`),
           context,
         },
       },
