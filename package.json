@@ -53,6 +53,8 @@
     "index.js",
     "tsconfig.json",
     "tsconfig.jest.json",
+    "tsconfig.dev.json",
+    "tsconfig.prod.json",
     "jest.config.js",
     "install.js",
     ".lintstagedrc",
