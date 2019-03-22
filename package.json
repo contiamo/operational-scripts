@@ -44,8 +44,8 @@
   "scripts": {
     "precommit": "lint-staged",
     "postinstall": "node install.js",
-    "lint": "eslint *.ts *.js ./",
-    "test": "node index.js test --json --outputFile=eslint-errors.json",
+    "lint": "eslint *.ts *.js assets/**/*.ts assets/**/*.tsx ./",
+    "test": "node index.js test --json --outputFile=test-errors.json",
     "ci": "[ ! -z $DANGER_GITHUB_API_TOKEN ] && yarn danger ci || echo \"Skipping Danger for External Contributor\""
   },
   "files": [

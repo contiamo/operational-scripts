@@ -34,11 +34,11 @@ if (pr.assignee === null) {
   fail("Please assign someone to merge this PR, and optionally include people who should review.");
 }
 
-// Show TSLint errors inline
+// Show ESLint errors inline
 // Yes, this is a bit lossy, we run the linter twice now, but its still a short amount of time
 // Perhaps we could indicate that eslint failed somehow the first time?
 // This process should always fail, so needs the `|| true` so it won't raise.
-child_process.execSync(`npm run lint -- -- --format json --out eslint-errors.json || true`);
+child_process.execSync(`yarn eslint -f json -o eslint-errors.json *.ts *.js assets/**/*.ts assets/**/*.tsx ./ || true`);
 
 if (fs.existsSync("eslint-errors.json")) {
   const eslintErrors = JSON.parse(fs.readFileSync("eslint-errors.json", "utf8")) as any[];
