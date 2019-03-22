@@ -34,7 +34,7 @@
     "node": ">=8.11.1"
   },
   "homepage": "https://www.contiamo.com",
-  "version": "1.3.0",
+  "version": "1.4.0-b938445",
   "private": false,
   "license": "MIT",
   "bin": {
