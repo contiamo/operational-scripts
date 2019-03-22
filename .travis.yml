@@ -14,4 +14,5 @@ env:
 # When Travis gets notified of a new build, do this
 script:
   - yarn test
+  - yarn lint --max-warnings=0
   - yarn ci

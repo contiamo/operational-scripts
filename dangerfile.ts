@@ -38,20 +38,20 @@ if (pr.assignee === null) {
 // Yes, this is a bit lossy, we run the linter twice now, but its still a short amount of time
 // Perhaps we could indicate that eslint failed somehow the first time?
 // This process should always fail, so needs the `|| true` so it won't raise.
-child_process.execSync(`yarn eslint -f json -o eslint-errors.json *.ts *.js assets/**/*.ts assets/**/*.tsx ./ || true`);
+// child_process.execSync(`yarn eslint -f json -o eslint-errors.json *.ts *.js assets/**/*.ts assets/**/*.tsx ./ || true`);
 
-if (fs.existsSync("eslint-errors.json")) {
-  const eslintErrors = JSON.parse(fs.readFileSync("eslint-errors.json", "utf8")) as any[];
-  if (eslintErrors.length) {
-    const errors = eslintErrors.map(error => {
-      const format = error.ruleSeverity === "ERROR" ? ":no_entry_sign:" : ":warning:";
-      const linkToFile = danger.github.utils.fileLinks([error.name]);
-      return `* ${format} ${linkToFile} - ${error.ruleName} - ${error.failure}`;
-    });
-    const eslintMarkdown = `
-  ## TSLint Issues:
-  ${errors.join("\n")}
-  `;
-    markdown(eslintMarkdown);
-  }
-}
+// if (fs.existsSync("eslint-errors.json")) {
+//   const eslintErrors = JSON.parse(fs.readFileSync("eslint-errors.json", "utf8")) as any[];
+//   if (eslintErrors.length) {
+//     const errors = eslintErrors.map(error => {
+//       const format = error.ruleSeverity === "ERROR" ? ":no_entry_sign:" : ":warning:";
+//       const linkToFile = danger.github.utils.fileLinks([error.name]);
+//       return `* ${format} ${linkToFile} - ${error.ruleName} - ${error.failure}`;
+//     });
+//     const eslintMarkdown = `
+//   ## TSLint Issues:
+//   ${errors.join("\n")}
+//   `;
+//     markdown(eslintMarkdown);
+//   }
+// }
