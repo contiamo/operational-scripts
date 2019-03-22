@@ -65,7 +65,7 @@ const defaultConfig = {
         test: /\.(ts|tsx)/,
         loader: "ts-loader",
         options: {
-          configFile: join(__dirname, `tsconfig.${isProduction ? "prod" : "dev"}.json`),
+          configFile: join(__dirname, `tsconfig${isProduction ? "" : ".dev"}.json`),
           context,
         },
       },
