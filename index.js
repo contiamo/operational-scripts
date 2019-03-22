@@ -93,7 +93,7 @@ switch (script) {
     break;
 
   case "lint-ts":
-    properExec("tslint", ["--fix", "-c", join(__dirname, "tslint.json")]);
+    properExec("eslint", ["--fix", "--max-warnings=0", "-c", join(__dirname, ".eslintrc.js")]);
     break;
 
   case "start":

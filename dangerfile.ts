@@ -36,23 +36,22 @@ if (pr.assignee === null) {
 
 // Show TSLint errors inline
 // Yes, this is a bit lossy, we run the linter twice now, but its still a short amount of time
-// Perhaps we could indicate that tslint failed somehow the first time?
+// Perhaps we could indicate that eslint failed somehow the first time?
 // This process should always fail, so needs the `|| true` so it won't raise.
-child_process.execSync(`npm run lint -- -- --format json --out tslint-errors.json || true`);
+child_process.execSync(`npm run lint -- -- --format json --out eslint-errors.json || true`);
 
-if (fs.existsSync("tslint-errors.json")) {
-  const tslintErrors = JSON.parse(fs.readFileSync("tslint-errors.json", "utf8")) as any[];
-  if (tslintErrors.length) {
-    const errors = tslintErrors.map(error => {
+if (fs.existsSync("eslint-errors.json")) {
+  const eslintErrors = JSON.parse(fs.readFileSync("eslint-errors.json", "utf8")) as any[];
+  if (eslintErrors.length) {
+    const errors = eslintErrors.map(error => {
       const format = error.ruleSeverity === "ERROR" ? ":no_entry_sign:" : ":warning:";
       const linkToFile = danger.github.utils.fileLinks([error.name]);
       return `* ${format} ${linkToFile} - ${error.ruleName} - ${error.failure}`;
     });
-    const tslintMarkdown = `
+    const eslintMarkdown = `
   ## TSLint Issues:
   ${errors.join("\n")}
   `;
-    markdown(tslintMarkdown);
+    markdown(eslintMarkdown);
   }
 }
-

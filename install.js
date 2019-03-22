@@ -5,7 +5,7 @@ const { sync: pkgDir } = require("pkg-dir");
 const Listr = require("listr");
 const get = require("lodash/get");
 
-const legacyArtefacts = ["tslint.json", "tsconfig.json", ".prettierrc"];
+const legacyArtefacts = [".eslintrc.js", "tsconfig.json", ".prettierrc"];
 const removeLegacyArtefacts = packageRoot => {
   const removeArtefact = artefact => {
     const contextArtefactPath = join(packageRoot, artefact);

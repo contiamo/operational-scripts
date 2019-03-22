@@ -2,7 +2,7 @@
 
 > scaffolding for web applications
 
-At Contiamo, we deal with a number of different UI projects written in TypeScript. Each project begins as a [greenfield project](https://en.wikipedia.org/wiki/Greenfield_project) and usually is scaffolded with starter scripts configured to handle things like [code style settings](https://prettier.io/docs/en/configuration.html), TypeScript compiler options, [linting](https://palantir.github.io/tslint/), [precommit hooks on git](https://git-scm.com/book/en/v2/Customizing-Git-Git-Hooks), _et cetera_. This starter then grows organically, while its scaffolding scripts go through a number of tweaks.
+At Contiamo, we deal with a number of different UI projects written in TypeScript. Each project begins as a [greenfield project](https://en.wikipedia.org/wiki/Greenfield_project) and usually is scaffolded with starter scripts configured to handle things like [code style settings](https://prettier.io/docs/en/configuration.html), TypeScript compiler options, [linting](https://eslint.org/), [precommit hooks on git](https://git-scm.com/book/en/v2/Customizing-Git-Git-Hooks), _et cetera_. This starter then grows organically, while its scaffolding scripts go through a number of tweaks.
 
 The end result is an array of no-longer- starter TypeScript codebases that have distinct scaffolding and lack some type of general consistency, homogeny or _glue_. Instead, we'd like each project to be consistent in its scaffolding, from starter to production, in order to allow each member of our team to be able to immediately read and understand the TypeScript codebase, while abstracting away the complexity of maintaining and piecing together starter scaffolding: dev servers, linters, and other things.
 
@@ -29,7 +29,7 @@ Ideally, with this starter, everything _just works_ so long as we have a reasona
 
 Running this command will:
 
-- Replace any scaffolding: TypeScript configuration (`tsconfig.json`), `tslint.json` and `.prettierrc` in your current project with our recommendations.
+- Replace any scaffolding: TypeScript configuration (`tsconfig.json`), `.eslintrc.js` and `.prettierrc` in your current project with our recommendations.
 
 * Install a precommit hook that, before commit:
   - Adds a table of contents to Markdown
