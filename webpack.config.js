@@ -46,7 +46,7 @@ const defaultConfig = {
     // These "chunks" are automatically generated with dynamic import();
     chunkFilename: "[name].[contenthash].js",
     path: outputDir,
-    publicPath: "/",
+    publicPath: "",
   },
   node: {
     fs: "empty",
