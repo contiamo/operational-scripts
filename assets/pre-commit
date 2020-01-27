@@ -1,13 +1,12 @@
 #!/usr/bin/env node
 const { execSync } = require("child_process");
+const { join } = require("path")
 
-const projectDir = execSync(`find ${process.cwd()}/node_modules`)
-  .toString()
-  .split("\n")[0];
-const operationalScripts = `${projectDir}/@operational/scripts`;
+const lintStaged = join( process.cwd(), `node_modules/.bin/lint-staged`)
+const lintStagedRc = join( process.cwd(), `node_modules/@operational/scripts/assets/.lintstagedrc`)
 
 try {
-  return execSync(`${projectDir}/.bin/lint-staged -c ${operationalScripts}/assets/.lintstagedrc`, {
+  return execSync(`${lintStaged} -c ${lintStagedRc}`, {
     stdio: "inherit",
   });
 } catch (e) {
