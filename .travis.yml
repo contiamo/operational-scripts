@@ -14,4 +14,3 @@ env:
 # When Travis gets notified of a new build, do this
 script:
   - yarn test
-  - yarn ci
