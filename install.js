@@ -3,9 +3,9 @@ const { join } = require("path");
 const { execSync } = require("child_process");
 const { sync: pkgDir } = require("pkg-dir");
 const Listr = require("listr");
-const get = require("lodash/get");
 
-const legacyArtefacts = ["tslint.json", "tsconfig.json", ".prettierrc"];
+const legacyArtefacts = [".eslintrc.js", "tsconfig.json", ".prettierrc", "babel.config.js"];
+
 const removeLegacyArtefacts = packageRoot => {
   const removeArtefact = artefact => {
     const contextArtefactPath = join(packageRoot, artefact);
@@ -145,47 +145,49 @@ const formatFiles = packageRoot => {
   );
 };
 
-try {
-  const packageRoot = pkgDir(join(__dirname, ".."));
-  if (!packageRoot) {
-    throw "Could not find the root of the current project.\nPlease make sure you have a package.json somewhere in this project.";
+function run() {
+  try {
+    const packageRoot = pkgDir(join(__dirname, ".."));
+    if (!packageRoot) {
+      throw "Could not find the root of the current project.\nPlease make sure you have a package.json somewhere in this project.";
+    }
+    const tasks = new Listr([
+      {
+        title: "Replace legacy artefacts with symlinks",
+        task: removeLegacyArtefacts,
+      },
+      {
+        title: "Install precommit hook",
+        task: installPreCommit,
+      },
+      {
+        title: "Install/Update gitignore",
+        task: installGitIgnore,
+      },
+      {
+        title: "Install static files",
+        task: installStaticFiles,
+      },
+      {
+        title: "Add npm scripts",
+        task: addScripts,
+      },
+      {
+        title: 'Add "main" file',
+        task: addMain,
+      },
+      {
+        title: "Reformat code in project",
+        task: formatFiles,
+      },
+    ]);
+    tasks.run(packageRoot);
+  } catch (e) {
+    console.error(e);
   }
-  const tasks = new Listr([
-    {
-      title: "Replace legacy artefacts with symlinks",
-      task: removeLegacyArtefacts,
-    },
-    {
-      title: "Install precommit hook",
-      task: installPreCommit,
-    },
-    {
-      title: "Install/Update gitignore",
-      task: installGitIgnore,
-    },
-    {
-      title: "Install static files",
-      task: installStaticFiles,
-    },
-    {
-      title: "Add npm scripts",
-      task: addScripts,
-    },
-    {
-      title: 'Add "main" file',
-      task: addMain,
-    },
-    {
-      title: "Reformat code in project",
-      task: formatFiles,
-    },
-  ]);
-  tasks.run(packageRoot);
-} catch (e) {
-  console.error(e);
 }
 
-// Methods exported for tests
 module.exports = {
   addDefaultScripts,
+  run,
 };

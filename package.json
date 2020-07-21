@@ -1,5 +1,6 @@
 {
   "name": "@operational/scripts",
+  "version": "3.0.0",
   "description": "A TypeScript first toolchain for developing front-end applications",
   "keywords": [
     "typescript",
@@ -31,10 +32,9 @@
     "url": "https://github.com/contiamo/operational-scripts"
   },
   "engines": {
-    "node": ">=8.11.1"
+    "node": ">=12.14.1"
   },
   "homepage": "https://www.contiamo.com",
-  "version": "2.0.1",
   "private": false,
   "license": "MIT",
   "bin": {
@@ -43,10 +43,8 @@
   "main": "./index.js",
   "scripts": {
     "precommit": "lint-staged",
-    "postinstall": "node install.js",
-    "lint": "tslint --project .",
-    "test": "node index.js test --json --outputFile=tslint-errors.json",
-    "ci": "[ ! -z $DANGER_GITHUB_API_TOKEN ] && yarn danger ci || echo \"Skipping Danger for External Contributor\""
+    "lint": "eslint .",
+    "test": "node index.js test"
   },
   "files": [
     ".gitignore",
@@ -55,47 +53,49 @@
     "tsconfig.jest.json",
     "tsconfig.dev.json",
     "tsconfig.prod.json",
-    "jest.config.js",
     "install.js",
     ".lintstagedrc",
     ".prettierrc",
-    "tslint.json",
+    ".eslintrc.js",
+    "babel.config.js",
     "webpack.config.js",
     "assets"
   ],
   "dependencies": {
-    "@types/jest": "^24.0.0",
-    "connect-history-api-fallback": "^1.6.0",
+    "@babel/core": "^7.10.5",
+    "@babel/preset-env": "^7.10.4",
+    "@babel/preset-react": "^7.10.4",
+    "@babel/preset-typescript": "^7.10.4",
+    "@typescript-eslint/eslint-plugin": "^3.7.0",
+    "@typescript-eslint/eslint-plugin-tslint": "^3.7.0",
+    "@typescript-eslint/parser": "^3.7.0",
+    "babel-jest": "^26.1.0",
+    "babel-loader": "^8.1.0",
     "copy-webpack-plugin": "^4.6.0",
-    "danger": "^7.0.15",
+    "css-loader": "^3.6.0",
     "doctoc": "^1.4.0",
+    "eslint": "^7.5.0",
     "fs-extra": "^7.0.1",
     "html-webpack-plugin": "^3.2.0",
     "jest": "^24.0.0",
-    "koa-connect": "^2.0.1",
-    "lint-staged": "^7.2.0",
     "listr": "^0.14.3",
     "lodash": "^4.17.10",
-    "pem": "^1.14.2",
     "pkg-dir": "^3.0.0",
-    "prettier": "^1.16.4",
-    "react-testing-library": "^5.0.0",
+    "style-loader": "^1.2.1",
     "ts-jest": "^24.0.0",
     "ts-loader": "^4.4.2",
-    "tslint": "^5.14.0",
-    "tslint-config-prettier": "^1.18.0",
-    "tslint-plugin-blank-line": "^0.0.8",
-    "typescript": "^3.3.3333",
+    "tslint": "^6.1.2",
+    "typescript": "^4.0.0-dev.20200721",
+    "typescript-styled-plugin": "^0.15.0",
     "webpack": "^4.29.6",
     "webpack-cli": "^3.2.3",
-    "webpack-dashboard": "^3.0.0",
     "webpack-dev-server": "^3.2.1",
     "webpack-merge": "^4.2.1",
     "yargs-parser": "^10.1.0"
   },
   "devDependencies": {
     "doctoc": "^1.3.1",
-    "lint-staged": "^7.2.0",
-    "prettier": "^1.11.0-rc.1"
+    "lint-staged": "^10.2.11",
+    "prettier": "^2.0.5"
   }
 }

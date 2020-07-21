@@ -4,7 +4,6 @@ const { execSync } = require("child_process");
 const { sync: pkgDir } = require("pkg-dir");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
-const DashboardPlugin = require("webpack-dashboard/plugin");
 const merge = require("webpack-merge");
 const webpack = require("webpack");
 
@@ -69,13 +68,21 @@ const defaultConfig = {
           context,
         },
       },
+      {
+        test: /\.css$/,
+        use: ["style-loader", "css-loader"],
+      },
+      {
+        test: /\.mjs$/,
+        include: /node_modules/,
+        type: "javascript/auto",
+      },
     ],
   },
   resolve: {
     extensions: [".js", ".jsx", ".ts", ".tsx"],
   },
   plugins: [
-    new DashboardPlugin(),
     new webpack.EnvironmentPlugin({
       VERSION: getVersion(), // Accessible in the js with: `process.env.VERSION`
     }),

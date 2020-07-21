@@ -2,15 +2,12 @@
 const { execSync, exec } = require("child_process");
 const { join } = require("path");
 const { sync: pkgDir } = require("pkg-dir");
-const { createCertificate } = require("pem");
 const { removeSync, readFileSync } = require("fs-extra");
 const { existsSync } = require("fs");
 const parseYargs = require("yargs-parser");
 const Listr = require("listr");
-const serve = require("webpack-dev-server");
 
-const history = require("connect-history-api-fallback");
-const convert = require("koa-connect");
+const install = require("./install");
 
 const [path, thisScript, script, ...forwardedArgs] = process.argv;
 const context = pkgDir(process.cwd());
@@ -92,8 +89,8 @@ switch (script) {
     properExec("doctoc");
     break;
 
-  case "lint-ts":
-    properExec("tslint", ["--fix", "-c", join(__dirname, "tslint.json")]);
+  case "eslint":
+    properExec("eslint", ["--fix", "-c", join(__dirname, ".eslintrc.js")]);
     break;
 
   case "start":
@@ -105,7 +102,7 @@ switch (script) {
     break;
 
   case "test":
-    properExec("jest", ["--config", join(__dirname, "jest.config.js"), "--rootDir", [context]]);
+    properExec("jest", ["--rootDir", [context]]);
     break;
 
   case "prepare":
@@ -127,26 +124,10 @@ Please adjust it and try again.
 
     break;
 
+  case "install":
+    install.run();
+    break;
+
   default:
     throw `Cannot find script ${script}. Please try again or ask for help.`;
 }
-
-/** Maybe later if we want to add a check-ts script */
-
-// case "check-ts":
-//   const tsconfig = require(join(__dirname, "tsconfig.json")) || {};
-//   const tscFlags = Object.entries(tsconfig.compilerOptions)
-//     .filter(([optionFlag]) => !optionFlag.match(RegExp("dir", "i")))
-//     .map(([optionKey, optionValue]) => {
-//       const optionFlag = `--${optionKey}`;
-//       if (optionValue === true) {
-//         return optionFlag;
-//       }
-//       if (optionValue instanceof Array) {
-//         return `${optionFlag} ${optionValue.join(",")}`;
-//       }
-//       return `${optionFlag} ${optionValue}`;
-//     });
-
-//   properExec("tsc", [...tscFlags, "--noEmit"]);
-//   break;

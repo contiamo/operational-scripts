@@ -8,11 +8,12 @@
       "git add"
     ],
     "*.(tsx|ts)": [
-        "operational-scripts lint-ts",
+        "operational-scripts eslint",
         "operational-scripts prettify",
         "git add"
     ],
     "*.(jsx|js)": [
+        "operational-scripts eslint",
         "operational-scripts prettify",
         "git add"
     ]

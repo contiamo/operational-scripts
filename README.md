@@ -26,10 +26,11 @@ Ideally, with this starter, everything _just works_ so long as we have a reasona
 ## Getting Started
 
 - `npm install @operational/scripts -D`
+- `npx operational-scripts install`
 
 Running this command will:
 
-- Replace any scaffolding: TypeScript configuration (`tsconfig.json`), `tslint.json` and `.prettierrc` in your current project with our recommendations.
+- Replace any scaffolding: TypeScript configuration (`tsconfig.json`), `.eslintrc.json` and `.prettierrc` in your current project with our recommendations.
 
 * Install a precommit hook that, before commit:
   - Adds a table of contents to Markdown
